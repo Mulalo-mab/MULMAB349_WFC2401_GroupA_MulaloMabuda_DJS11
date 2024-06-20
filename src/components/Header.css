@@ -1,0 +1,74 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #ffdb63;
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+}
+
+.logo-link {
+  text-decoration: none;
+}
+
+.logo {
+  height: 50px;
+}
+
+.name {
+  margin-left: 10px; /* Adjust margin as needed */
+  color: #fff; /* Text color */
+  font-size: 1.6rem; /* Font size */
+  font-weight: bold; /* Font weight */
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 70px;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #0c0c0c;
+  border-radius: 5px;
+  padding: 5px 10px; /* Adjusted padding for better spacing */
+  background-color: #e6dddd;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.nav-links a:hover {
+  color: #c7f523ad;
+  background-color: #02ffea;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-input {
+  padding: 8px 12px; /* Adjusted padding for better input height */
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  width: 300px; /* Adjust width as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+  transition: box-shadow 0.3s ease; /* Smooth transition for box shadow */
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced box shadow on focus */
+}
+
+.logout-button {
+  /* Style for logout button if needed */
+}
