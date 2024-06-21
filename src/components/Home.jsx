@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchPreviews } from "../services/PodcastService";
 import { useFavorites } from "../contexts/FavoritesContext";
-import AudioPlayer from "./AudioPlayer";
 import "./Home.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const Home = ({ searchQuery, onSearchChange }) => {
   const [previews, setPreviews] = useState([]);
   const [filteredPreviews, setFilteredPreviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sortCriteria, setSortCriteria] = useState("All");
-  const [selectedGenre, setSelectedGenre] = useState("All");
+  const [sortCriteria, setSortCriteria] = useState(() => localStorage.getItem("sortCriteria") || "All");
+  const [selectedGenre, setSelectedGenre] = useState(() => localStorage.getItem("selectedGenre") || "All");
   const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites();
 
   const genres = {
@@ -32,7 +33,6 @@ const Home = ({ searchQuery, onSearchChange }) => {
       try {
         const data = await fetchPreviews();
         setPreviews(data);
-        setFilteredPreviews(data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching previews:", error);
@@ -88,10 +88,12 @@ const Home = ({ searchQuery, onSearchChange }) => {
 
   const handleSortChange = (criteria) => {
     setSortCriteria(criteria);
+    localStorage.setItem("sortCriteria", criteria); // Save to localStorage
   };
 
   const handleGenreChange = (genre) => {
     setSelectedGenre(genre);
+    localStorage.setItem("selectedGenre", genre); // Save to localStorage
   };
 
   const handleFavoriteToggle = (podcast) => {
@@ -108,7 +110,7 @@ const Home = ({ searchQuery, onSearchChange }) => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="load">Loading...</div>;
   }
 
   if (error) {
@@ -117,7 +119,21 @@ const Home = ({ searchQuery, onSearchChange }) => {
 
   return (
     <div className="home">
-      <h1 className="tittle">PodParadise</h1>
+      <h1 className="title">PodParadise</h1>
+      
+      {/* Carousel Section */}
+      <div className="carousel-container">
+        <Carousel showThumbs={false} autoPlay infiniteLoop>
+          {previews.map((podcast) => (
+            <div key={podcast.id}>
+              <img src={podcast.image} alt={`Season ${podcast.seasons}`} />
+              <p className="legend">{`Season ${podcast.seasons}`}</p>
+            </div>
+          ))}
+        </Carousel>
+      </div>
+      
+      {/* Filters Section */}
       <div className="filter-dropdown">
         <select
           value={sortCriteria}
@@ -141,6 +157,8 @@ const Home = ({ searchQuery, onSearchChange }) => {
           ))}
         </select>
       </div>
+      
+      {/* Podcast List */}
       <ul className="podcast-list">
         {filteredPreviews.map((podcast) => (
           <li key={podcast.id} className="podcast-item">

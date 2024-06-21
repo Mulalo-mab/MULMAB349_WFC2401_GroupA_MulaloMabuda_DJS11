@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home";
@@ -11,11 +11,18 @@ import { FavoritesProvider } from "./contexts/FavoritesContext";
 import { AuthProvider } from "./contexts/AuthContext";
 
 const App = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(
+    localStorage.getItem("searchQuery") || ""
+  );
 
   const handleSearchChange = (query) => {
     setSearchQuery(query);
+    localStorage.setItem("searchQuery", query);
   };
+
+  useEffect(() => {
+    localStorage.setItem("searchQuery", searchQuery);
+  }, [searchQuery]);
 
   return (
     <CategoryProvider>
@@ -45,8 +52,6 @@ const App = () => {
                     </PrivateRoute>
                   }
                 />
-                
-                
                 <Route
                   path="/show/:showId"
                   element={

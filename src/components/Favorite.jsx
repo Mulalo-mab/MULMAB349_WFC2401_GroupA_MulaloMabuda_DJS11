@@ -52,7 +52,7 @@ const Favorite = () => {
   const sortedFavoriteEpisodes = sortEpisodes(favoriteEpisodes, sortCriteria);
 
   if (favoriteEpisodes.length === 0) {
-    return <div>No favorite episodes yet!</div>;
+    return <div className="message">Oops there is nothing here!!!</div>;
   }
 
   return (

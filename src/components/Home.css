@@ -4,13 +4,68 @@
   padding-top: 100px; /* Maintain padding-top for top navigation */
 }
 
-.tittle {
+.title {
   display: flex;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   text-align: center; /* Optional: Center text within the element */
 }
 
+.carousel-container {
+  max-width: 500px; /* Adjust maximum width as needed */
+  margin: 0 auto; /* Center align the carousel */
+  margin-bottom: 20px; /* Add space between carousel and filter dropdown */
+}
+
+.carousel-container .carousel {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-container .carousel .slide {
+  background-color: #fff; /* Background color of each slide */
+}
+
+.carousel-container .carousel .slide img {
+  width: 100%; /* Ensure images fill the carousel slide */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.carousel-container .legend {
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for legend */
+  color: #fff;
+  font-size: 1.2em;
+}
+
+/* Additional styles for the dropdowns */
+.filter-dropdown {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-dropdown select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.filter-dropdown select:hover {
+  border-color: #999;
+}
+
+.filter-dropdown select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Podcast List Styles (unchanged from your original CSS) */
 .podcast-list {
   display: flex;
   flex-wrap: wrap;
@@ -105,31 +160,6 @@
   z-index: 1000;
 }
 
-/* Additional styles for the dropdowns */
-.filter-dropdown {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.filter-dropdown select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  cursor: pointer;
-  transition: border-color 0.3s;
-}
-
-.filter-dropdown select:hover {
-  border-color: #999;
-}
-
-.filter-dropdown select:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
 /* Media query for screens up to 1024px */
 @media (max-width: 1024px) {
   .podcast-item {
@@ -166,4 +196,11 @@
   .play-button {
     width: 100%; /* Make play button full width on small screens */
   }
+}
+
+
+
+.load {
+  font-weight: 100;
+  font-size: x-large;
 }

@@ -1,14 +1,14 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Create the AuthContext
 const AuthContext = createContext();
 
-// Custom hook to use the AuthContext
 export const useAuth = () => useContext(AuthContext);
 
-// AuthProvider component
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   // Function to validate email format
   const isValidEmail = (email) => {
@@ -25,7 +25,9 @@ export const AuthProvider = ({ children }) => {
   // Login function with email and numeric password validation
   const login = (username, password) => {
     if (isValidEmail(username) && isValidPassword(password)) {
-      setUser({ username });
+      const user = { username };
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
       return true;
     }
     return false;
@@ -33,6 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   // Logout function
   const logout = () => {
+    localStorage.removeItem('user');
     setUser(null);
   };
 

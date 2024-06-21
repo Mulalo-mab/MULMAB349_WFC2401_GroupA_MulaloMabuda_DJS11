@@ -36,5 +36,9 @@ button:hover {
   background-color: #23c891;
 }
 
-
+.message {
+  font-size: larger;
+  font-weight: 100;
+  
+}
 

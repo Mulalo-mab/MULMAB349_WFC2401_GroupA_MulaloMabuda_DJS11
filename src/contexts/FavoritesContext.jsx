@@ -1,14 +1,21 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 export const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
-  const [favorites, setFavorites] = useState({});
+  const [favorites, setFavorites] = useState(() => {
+    const savedFavorites = localStorage.getItem("favorites");
+    return savedFavorites ? JSON.parse(savedFavorites) : {};
+  });
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   const addFavorite = (episode) => {
     setFavorites((prevFavorites) => ({
       ...prevFavorites,
-      [episode.id]: { ...episode, addedAt: new Date().toISOString() }, // Include addedAt property
+      [episode.id]: { ...episode, addedAt: new Date().toISOString() },
     }));
   };
 

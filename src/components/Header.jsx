@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CategoryContext } from "./context/CategoryContext";
 import { useAuth } from "../contexts/AuthContext";
 import logo from "../assets/logo.jpeg";
@@ -8,6 +8,7 @@ import "./Header.css";
 const Header = ({ searchQuery, onSearchChange }) => {
   const { setSelectedCategory } = useContext(CategoryContext);
   const { user, logout } = useAuth();
+  const location = useLocation();
 
   const handleHomeClick = () => {
     setSelectedCategory("All");
@@ -16,6 +17,13 @@ const Header = ({ searchQuery, onSearchChange }) => {
   const handleSearchChange = (e) => {
     onSearchChange(e.target.value);
   };
+
+  // Determine if the header should be shown based on current location
+  const showHeader = location.pathname !== "/login";
+
+  if (!showHeader) {
+    return null; // If on the login page, do not render the header
+  }
 
   return (
     <header className="header">
