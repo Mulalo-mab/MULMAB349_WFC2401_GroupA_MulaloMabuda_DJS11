@@ -1,6 +1,7 @@
 .home {
   padding: 20px;
   background-color: #f1e20b;
+  padding-top: 100px; /* Maintain padding-top for top navigation */
 }
 
 .tittle {
@@ -104,14 +105,6 @@
   z-index: 1000;
 }
 
-.favorite-icon.favorite {
-  color: #ff0000;
-}
-
-.favorite-icon:hover {
-  color: #ff0000;
-}
-
 /* Additional styles for the dropdowns */
 .filter-dropdown {
   display: flex;
@@ -161,7 +154,16 @@
   }
 
   .podcast-item {
-    flex: 0 0 100%; /* Full width */
+    flex: 0 0 100%; /* 1 item per row (full width) */
     max-width: 100%;
+  }
+
+  .action-buttons {
+    flex-direction: column; /* Stack action buttons vertically on small screens */
+    gap: 10px; /* Add gap between buttons */
+  }
+
+  .play-button {
+    width: 100%; /* Make play button full width on small screens */
   }
 }

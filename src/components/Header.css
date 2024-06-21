@@ -1,10 +1,18 @@
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
   background-color: #ffdb63;
-  @media (max-width: 768px) {
+}
+
+@media (max-width: 768px) {
+  .header {
     padding: 16px;
   }
 }
@@ -18,16 +26,23 @@
 }
 
 .name {
-  margin-left: 10px; /* Adjust margin as needed */
-  color: #fff; /* Text color */
-  font-size: 1.6rem; /* Font size */
-  font-weight: bold; /* Font weight */
+  margin-left: 10px;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: bold;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 70px;
+  gap: 20px; /* Adjusted gap for better spacing on smaller screens */
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column; /* Stack navigation links vertically on smaller screens */
+    gap: 10px; /* Reduced gap between links */
+  }
 }
 
 .nav-links li {
@@ -38,7 +53,7 @@
   text-decoration: none;
   color: #0c0c0c;
   border-radius: 5px;
-  padding: 5px 10px; /* Adjusted padding for better spacing */
+  padding: 5px 10px;
   background-color: #e6dddd;
   font-weight: bold;
   font-size: 1.3rem;
@@ -54,21 +69,31 @@
 }
 
 .search-input {
-  padding: 8px 12px; /* Adjusted padding for better input height */
+  padding: 8px 12px;
   font-size: 1rem;
   border: none;
   border-radius: 5px;
   background-color: #fff;
-  width: 300px; /* Adjust width as needed */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
-  transition: box-shadow 0.3s ease; /* Smooth transition for box shadow */
+  width: 200px; /* Adjusted width for smaller screens */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
 
 .search-input:focus {
   outline: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced box shadow on focus */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logout-button {
-  /* Style for logout button if needed */
+  padding: 8px 16px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #0c0c0c;
+  color: #fff;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #333;
 }

@@ -9,10 +9,14 @@
 
 .favorite-item {
   margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .favorite-item h3 {
   margin: 0 0 5px 0;
+  font-size: 1.5em;
 }
 
 .favorite-item p {
@@ -20,7 +24,7 @@
 }
 
 button {
-  background-color: #dc3545;
+  background-color: #3edda0;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -29,5 +33,8 @@ button {
 }
 
 button:hover {
-  background-color: #c82333;
+  background-color: #23c891;
 }
+
+
+

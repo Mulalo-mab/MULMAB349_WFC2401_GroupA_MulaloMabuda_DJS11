@@ -8,7 +8,7 @@ export const FavoritesProvider = ({ children }) => {
   const addFavorite = (episode) => {
     setFavorites((prevFavorites) => ({
       ...prevFavorites,
-      [episode.id]: episode,
+      [episode.id]: { ...episode, addedAt: new Date().toISOString() }, // Include addedAt property
     }));
   };
 
