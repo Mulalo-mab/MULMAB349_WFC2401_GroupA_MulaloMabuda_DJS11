@@ -5,20 +5,47 @@ import { useAuth } from "../contexts/AuthContext";
 import logo from "../assets/logo.jpeg";
 import "./Header.css";
 
-const Header = ({ searchQuery, onSearchChange }) => {
-  const { setSelectedCategory } = useContext(CategoryContext);
-  const { user, logout } = useAuth();
-  const location = useLocation();
+/**
+ * Header component
+ * 
+ * A functional React component that renders the navigation header, including a search bar, links, and user authentication controls.
+ * 
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.searchQuery - The current search query string.
+ * @param {function} props.onSearchChange - The callback function to handle search query changes.
+ * 
+ * @example
+ * // Example usage:
+ * <Header 
+ *   searchQuery={searchQuery} 
+ *   onSearchChange={handleSearchChange} 
+ * />
+ */
 
+const Header = ({ searchQuery, onSearchChange }) => {
+  const { setSelectedCategory } = useContext(CategoryContext); // Context to manage the selected category
+  const { user, logout } = useAuth(); // Custom hook to access authentication state and logout function
+  const location = useLocation(); // Hook to access the current location
+
+  /**
+   * Handle click on the home link
+   * Sets the selected category to "All"
+   */
   const handleHomeClick = () => {
     setSelectedCategory("All");
   };
 
+  /**
+   * Handle search input change
+   * 
+   * @param {Object} e - The event object
+   */
   const handleSearchChange = (e) => {
     onSearchChange(e.target.value);
   };
 
-  // Determine if the header should be shown based on current location
+  // Determine if the header should be shown based on the current location
   const showHeader = location.pathname !== "/login";
 
   if (!showHeader) {
@@ -42,7 +69,6 @@ const Header = ({ searchQuery, onSearchChange }) => {
               <li>
                 <Link to="/favorite">Favorite</Link>
               </li>
-
               <li className="search-container">
                 <input
                   type="text"

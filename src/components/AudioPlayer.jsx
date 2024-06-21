@@ -1,37 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react';
-//import './AudioPlayer.css';
+import './AudioPlayer.css';
 
 const AudioPlayer = ({ src, isPlaying, onPlay, onPause }) => {
   const audioRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
+    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const handleLoadedData = () => setDuration(audio.duration);
 
-    const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime);
-    };
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadeddata', handleLoadedData);
 
-    const handleLoadedData = () => {
-      setDuration(audio.duration);
-    };
-
-    if (audio) {
-      audio.addEventListener('timeupdate', handleTimeUpdate);
-      audio.addEventListener('loadeddata', handleLoadedData);
-
-      if (isPlaying) {
-        audio.play();
-      } else {
-        audio.pause();
-      }
-
-      return () => {
-        audio.removeEventListener('timeupdate', handleTimeUpdate);
-        audio.removeEventListener('loadeddata', handleLoadedData);
-      };
+    if (isPlaying) {
+      audio.play();
+    } else {
+      audio.pause();
     }
+
+    // Add beforeunload event listener
+    const handleBeforeUnload = (e) => {
+      if (isPlaying) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadeddata', handleLoadedData);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, [isPlaying]);
 
   const handlePlayPause = () => {
@@ -54,29 +57,35 @@ const AudioPlayer = ({ src, isPlaying, onPlay, onPause }) => {
     setCurrentTime(seekTime);
   };
 
-  const handleReset = () => {
-    // Reset audio player state
-    setCurrentTime(0);
-    onPause(); // Pause the audio if playing
-    audioRef.current.currentTime = 0;
+  const toggleMute = () => {
+    audioRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
   };
+
+  const progress = (currentTime / duration) * 100 || 0;
 
   return (
     <div className="audio-player">
       <audio ref={audioRef} src={src} />
-      <div className="controls">
-        <button onClick={handlePlayPause}>
-          {isPlaying ? 'Pause' : 'Play'}
-        </button>
-        <button onClick={handleReset}>Reset</button>
+      <button className="play-pause-btn" onClick={handlePlayPause}>
+        {isPlaying ? '⏸' : '▶️'}
+      </button>
+      <span className="time">{formatTime(currentTime)}</span>
+      <div className="seek-bar-container">
         <input
           type="range"
+          className="seek-bar"
           value={currentTime}
           max={duration || 0}
           onChange={handleSeek}
         />
-        <span>{formatTime(currentTime)}</span> / <span>{formatTime(duration)}</span>
+        <div className="progress-bar" style={{ width: `${progress}%` }}></div>
       </div>
+      <span className="time">{formatTime(duration)}</span>
+      <button className="mute-btn" onClick={toggleMute}>
+        {isMuted ? '🔇' : '🔊'}
+      </button>
+      <button className="more-btn">⋮</button>
     </div>
   );
 };

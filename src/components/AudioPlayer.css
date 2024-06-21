@@ -1,4 +1,4 @@
-.audio-player {
+/*.audio-player {
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -23,4 +23,66 @@
     background: #4caf50;
     border-radius: 2.5px;
   }
+  */
+
+
+  .audio-player {
+    display: flex;
+    align-items: center;
+    background-color: #f1f3f4;
+    border-radius: 24px;
+    padding: 8px 16px;
+    width: fit-content;
+  }
   
+  .play-pause-btn, .mute-btn, .more-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0;
+    margin: 0 8px;
+  }
+  
+  .time {
+    font-size: 14px;
+    margin: 0 8px;
+  }
+  
+  .seek-bar {
+    width: 200px;
+    margin: 0 8px;
+  }
+  
+  /* You may want to style the range input to look more like the one in the image */
+  .seek-bar {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+  }
+  
+  .seek-bar:hover {
+    opacity: 1;
+  }
+  
+  .seek-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #4CAF50;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  
+  .seek-bar::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #4CAF50;
+    cursor: pointer;
+    border-radius: 50%;
+  }

@@ -1,16 +1,20 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
+// Create a new context for authentication
 const AuthContext = createContext();
 
+// Custom hook to use the authentication context
 export const useAuth = () => useContext(AuthContext);
 
+// AuthProvider component manages authentication state and functions
 export const AuthProvider = ({ children }) => {
+  // State to hold the current user, fetched from localStorage
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
+    return storedUser ? JSON.parse(storedUser) : null; // Parse stored user data from localStorage
   });
 
-  // Function to validate email format
+  // Function to validate email format using regex
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -26,22 +30,23 @@ export const AuthProvider = ({ children }) => {
   const login = (username, password) => {
     if (isValidEmail(username) && isValidPassword(password)) {
       const user = { username };
-      localStorage.setItem('user', JSON.stringify(user));
-      setUser(user);
-      return true;
+      localStorage.setItem('user', JSON.stringify(user)); // Store user data in localStorage
+      setUser(user); // Update user state
+      return true; // Return true for successful login
     }
-    return false;
+    return false; // Return false if login fails
   };
 
   // Logout function
   const logout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
+    localStorage.removeItem('user'); // Remove user data from localStorage
+    setUser(null); // Clear user state
   };
 
+  // Provide the AuthContext with user state, login, and logout functions to children components
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+      {children} {/* Render children components */}
     </AuthContext.Provider>
   );
 };
